@@ -32,7 +32,8 @@ function TabPanel(props: TabPanelProps) {
 const RoleIcons = {
     Host: <Star sx={{ color: '#eab308' }} />,
     Moderator: <Shield sx={{ color: '#3b82f6' }} />,
-    Participant: <Person sx={{ color: '#9ca3af' }} />
+    Participant: <Person sx={{ color: '#9ca3af' }} />,
+    Viewer: <Person sx={{ color: '#9ca3af' }} />
 };
 
 export const UserSidebar = () => {
@@ -148,7 +149,7 @@ export const UserSidebar = () => {
 
                 <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
                     <MenuItem disabled sx={{ opacity: 1, fontSize: '0.75rem', fontWeight: 'bold' }}>Change Role</MenuItem>
-                    {(['Moderator', 'Participant'] as Role[]).map((r) => (
+                    {(['Moderator', 'Participant', 'Viewer'] as Role[]).map((r) => (
                         <MenuItem key={r} onClick={() => handleAssignRole(r)}>
                             Make {r}
                         </MenuItem>

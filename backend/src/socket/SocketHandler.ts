@@ -111,6 +111,7 @@ export class SocketHandler {
                     socket.emit('error_message', { message: 'Host cannot change their own role.' });
                     return;
                 }
+                // Viewer is a read-only alias of Participant (allowed here)
                 const targetParticipant = room.getParticipant(userId);
                 if (targetParticipant) {
                     targetParticipant.role = role;

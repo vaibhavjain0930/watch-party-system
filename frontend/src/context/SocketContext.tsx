@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState, useCallback } f
 import type { ReactNode } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-export type Role = 'Host' | 'Moderator' | 'Participant';
+export type Role = 'Host' | 'Moderator' | 'Participant' | 'Viewer';
 
 export interface Participant {
   id: string;

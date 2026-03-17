@@ -1,4 +1,4 @@
-export type Role = 'Host' | 'Moderator' | 'Participant';
+export type Role = 'Host' | 'Moderator' | 'Participant' | 'Viewer';
 
 export class Participant {
     id: string;        // Socket ID
