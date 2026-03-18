@@ -39,9 +39,9 @@ const Room = () => {
                     <Typography variant="h6" className="animate-pulse" color="primary">
                         Connecting to server...
                     </Typography>
-                    {/* <Typography variant="body2" color="text.secondary" mt={1}>
+                    <Typography variant="body2" color="text.secondary" mt={1}>
                         Backend: {backendUrl}
-                    </Typography> */}
+                    </Typography>
                     {connectionError && (
                         <Box mt={3} maxWidth={520}>
                             <Alert severity="error">
