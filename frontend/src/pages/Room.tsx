@@ -3,7 +3,7 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useSocket } from '../context/SocketContext';
 import { UserSidebar } from '../components/UserSidebar';
 import { VideoPlayer } from '../components/VideoPlayer';
-import { Box, Typography, Button, AppBar, Toolbar, Alert, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, Button, AppBar, Toolbar, Alert, Drawer, IconButton, useMediaQuery, useTheme, CircularProgress } from '@mui/material';
 import { Logout, Menu as MenuIcon } from '@mui/icons-material';
 
 const Room = () => {
@@ -35,12 +35,13 @@ const Room = () => {
         return (
             <Box display="flex" minHeight="100vh" alignItems="center" justifyContent="center">
                 <Box textAlign="center">
+                    <CircularProgress size={48} sx={{ mb: 3 }} />
                     <Typography variant="h6" className="animate-pulse" color="primary">
                         Connecting to server...
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" mt={1}>
+                    {/* <Typography variant="body2" color="text.secondary" mt={1}>
                         Backend: {backendUrl}
-                    </Typography>
+                    </Typography> */}
                     {connectionError && (
                         <Box mt={3} maxWidth={520}>
                             <Alert severity="error">
