@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { useSocket } from '../context/SocketContext';
 import { UserSidebar } from '../components/UserSidebar';
 import { VideoPlayer } from '../components/VideoPlayer';
-import { Box, Typography, Button, AppBar, Toolbar, Alert } from '@mui/material';
-import { Logout } from '@mui/icons-material';
+import { Box, Typography, Button, AppBar, Toolbar, Alert, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Logout, Menu as MenuIcon } from '@mui/icons-material';
 
 const Room = () => {
     const { roomId } = useParams<{ roomId: string }>();
@@ -13,6 +13,14 @@ const Room = () => {
     const navigate = useNavigate();
     
     const { joinRoom, leaveRoom, isConnected, connectionError, backendUrl } = useSocket();
+    
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const [mobileOpen, setMobileOpen] = useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     useEffect(() => {
         if (!username || !roomId) {
@@ -53,6 +61,20 @@ const Room = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
                         Watch Party <Typography component="span" color="primary.main">Live</Typography>
                     </Typography>
+                    
+                    {/* Add Drawer Toggle on Mobile */}
+                    {isMobile && (
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="end"
+                            onClick={handleDrawerToggle}
+                            sx={{ mr: 1, color: 'primary.main' }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    )}
+
                     <Button 
                         color="inherit" 
                         startIcon={<Logout />}
@@ -61,25 +83,49 @@ const Room = () => {
                             navigate('/');
                         }}
                     >
-                        Leave Room
+                        Leave
                     </Button>
                 </Toolbar>
             </AppBar>
 
             {/* Main Content Area */}
-            <Box display="flex" flex={1} overflow="hidden">
+            <Box display="flex" flex={1} overflow="hidden" flexDirection={{ xs: 'column', md: 'row' }}>
                 
-                {/* Left Side: Video Player */}
-                <Box flex={1} display="flex" alignItems="center" justifyContent="center" p={4} position="relative">
+                {/* Video Player Area */}
+                <Box flex={1} display="flex" alignItems="center" justifyContent="center" p={{ xs: 2, md: 4 }} position="relative" overflow="auto">
                      <Box width="100%" maxWidth="1200px">
                           <VideoPlayer />
                      </Box>
                 </Box>
 
-                {/* Right Side: Sidebar (Participants & Chat) */}
-                <Box width={350} borderLeft={1} borderColor="divider" bgcolor="background.paper" display="flex" flexDirection="column">
-                    <UserSidebar />
-                </Box>
+                {/* Sidebar (Participants & Chat) */}
+                {isMobile ? (
+                    <Drawer
+                        anchor="right"
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
+                        sx={{
+                            display: { xs: 'block', md: 'none' },
+                            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 320 },
+                        }}
+                    >
+                        <UserSidebar />
+                    </Drawer>
+                ) : (
+                    <Box 
+                        width={350} 
+                        borderLeft={1} 
+                        borderColor="divider" 
+                        bgcolor="background.paper" 
+                        display="flex" 
+                        flexDirection="column"
+                    >
+                        <UserSidebar />
+                    </Box>
+                )}
             </Box>
         </Box>
     );

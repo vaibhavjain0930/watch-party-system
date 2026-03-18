@@ -339,7 +339,7 @@ export const VideoPlayer = () => {
       {/* Video Change UI - Admins Only */}
       {isControlAllowed && (
         <Paper elevation={4} sx={{ width: '100%', maxWidth: 700, p: 2, mt: 4, borderRadius: 3 }}>
-          <Box component="form" onSubmit={handleUrlChangeSubmit} display="flex" gap={2}>
+          <Box component="form" onSubmit={handleUrlChangeSubmit} display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={2}>
             <TextField
               fullWidth
               size="small"
